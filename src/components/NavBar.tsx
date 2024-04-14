@@ -31,13 +31,14 @@ export default function NavBar({ settings }: NavBarProps) {
           <Link href="/blog" className="p-10" onClick={() => setOpen(true)}>Blog</Link>
           <Link href="/contact" className="p-10" onClick={() => setOpen(true)}>Contact</Link>
           
-         
+         <Link href='/sign-in">
           <button
             type="button"
             className="block p-2 text-3xl text-white md:hidden"
             aria-expanded={open}
             onClick={() => setOpen(true)}
           >
+            </Link>
             
             
             <MdMenu />
