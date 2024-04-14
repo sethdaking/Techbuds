@@ -1,5 +1,5 @@
 import { Content, isFilled } from "@prismicio/client";
-import createClient from "../../../prismicio";
+import { createClient } from "../../../prismicio";
 import { PrismicRichText, PrismicText } from "@prismicio/react";
 import { PrismicNextLink } from "@prismicio/next";
 import { ProductsProps } from ".";
