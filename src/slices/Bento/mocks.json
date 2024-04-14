@@ -1,0 +1,108 @@
+[
+	{
+		"__TYPE__": "SharedSliceContent",
+		"variation": "default",
+		"primary": {
+			"heading": {
+				"__TYPE__": "StructuredTextContent",
+				"value": [
+					{
+						"type": "heading2",
+						"content": {
+							"text": "The new\nGold Standard.",
+							"spans": [
+								{
+									"type": "em",
+									"start": 8,
+									"end": 21
+								}
+							]
+						},
+						"direction": "ltr"
+					}
+				]
+			},
+			"body": {
+				"__TYPE__": "StructuredTextContent",
+				"value": [
+					{
+						"type": "paragraph",
+						"content": {
+							"text": "Introducing a new way of building components and layouts that leaves everything else in the dust.",
+							"spans": []
+						},
+						"direction": "ltr"
+					}
+				]
+			}
+		},
+		"items": [
+			{
+				"__TYPE__": "GroupItemContent",
+				"value": [
+					[
+						"title",
+						{
+							"__TYPE__": "StructuredTextContent",
+							"value": [
+								{
+									"type": "heading3",
+									"content": {
+										"text": "Inside"
+									}
+								}
+							]
+						}
+					],
+					[
+						"body",
+						{
+							"__TYPE__": "StructuredTextContent",
+							"value": [
+								{
+									"type": "paragraph",
+									"content": {
+										"text": "Dolor ad qui est consequat velit proident exercitation aliqua. Minim voluptate velit irure et laborum dolore id quis sint pariatur ipsum. Consequat deserunt voluptate ex est voluptate quis ad sunt sunt sunt velit non."
+									}
+								}
+							]
+						}
+					],
+					[
+						"image",
+						{
+							"origin": {
+								"id": "main",
+								"url": "https://images.unsplash.com/photo-1448932223592-d1fc686e76ea",
+								"width": 3500,
+								"height": 2338
+							},
+							"url": "https://images.unsplash.com/photo-1448932223592-d1fc686e76ea",
+							"width": 3500,
+							"height": 2338,
+							"edit": {
+								"zoom": 1,
+								"crop": {
+									"x": 0,
+									"y": 0
+								},
+								"background": "transparent"
+							},
+							"credits": null,
+							"alt": null,
+							"__TYPE__": "ImageContent",
+							"thumbnails": {}
+						}
+					],
+					[
+						"wide",
+						{
+							"__TYPE__": "BooleanContent",
+							"value": true
+						}
+					]
+				]
+			}
+		]
+	}
+]
