@@ -31,8 +31,8 @@ const transporter = nodemailer.createTransport({
         }
     });
 
-
 try {
+
         const mail = await transporter.sendMail({
             from: username,
             to: myEmail,
@@ -43,4 +43,12 @@ try {
             <p>Email: ${email} </p>
             <p>Message: ${message} </p>
             `,
-        })
+        });
+
+        return NextResponse.json({ message: "Success: email was sent" })
+
+    } catch (error) {
+        console.log(error)
+        NextResponse.status(500).json({ message: "COULD NOT SEND MESSAGE" })
+    }
+
