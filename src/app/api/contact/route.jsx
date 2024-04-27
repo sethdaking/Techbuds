@@ -45,7 +45,7 @@ try {
             `,
         });
 
-        return NextResponse.json({ message: "Success: email was sent" })
+        console.log( NextResponse.json({ message: "Success: email was sent" }))
 
     } catch (error) {
         console.log(error)
