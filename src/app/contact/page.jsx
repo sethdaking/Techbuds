@@ -1,35 +1,4 @@
-'use client'
 
-import { FormEvent, useState } from 'react'
-import Confetti from 'react-confetti'
-
-export const ContactForm = () => {
-  const [isSubmitted, setSubmitted] = useState(false)
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [message, setMessage] = useState('')
-
-  const onSubmit = async (e: FormEvent) => {
-    e.preventDefault()
-
-    try {
-      const res = await fetch('/api/contact', {
-        method: 'POST',
-        body: JSON.stringify({
-          name,
-          email,
-          message,
-        }),
-        headers: {
-          'content-type': 'application/json',
-        },
-      })
-      if (res.status === 200) {
-        setSubmitted(true)
-      }
-    } catch (err: any) {
-      console.error('Err', err)
-    }
   }
 
   return isSubmitted ? (
