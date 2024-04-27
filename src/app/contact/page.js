@@ -1,151 +1,86 @@
-"use client";
+'use client'
 
-import {
-    Button,
-    Container,
-    FormControl,
-    FormErrorMessage,
-    FormLabel,
-    Heading,
-    Input,
-    Text,
-    Textarea,
-    useToast,
-  } from "@chakra-ui/react";
-  import { useState } from "react";
-  import { sendContactForm } from "../../lib/api";
-import Bounded from "@/components/Bounded";
-  
-  const initValues = { name: "", email: "", subject: "", message: "" };
-  
-  const initState = { isLoading: false, error: "", values: initValues };
-  
-  export default function Home() {
-    const toast = useToast();
-    const [state, setState] = useState(initState);
-    const [touched, setTouched] = useState({});
-  
-    const { values, isLoading, error } = state;
-  
-    const onBlur = ({ target }) =>
-      setTouched((prev) => ({ ...prev, [target.name]: true }));
-  
-    const handleChange = ({ target }) =>
-      setState((prev) => ({
-        ...prev,
-        values: {
-          ...prev.values,
-          [target.name]: target.value,
+import { FormEvent, useState } from 'react'
+import Confetti from 'react-confetti'
+
+export const ContactForm = () => {
+  const [isSubmitted, setSubmitted] = useState(false)
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [message, setMessage] = useState('')
+
+  const onSubmit = async (e: FormEvent) => {
+    e.preventDefault()
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        body: JSON.stringify({
+          name,
+          email,
+          message,
+        }),
+        headers: {
+          'content-type': 'application/json',
         },
-      }));
-  
-    const onSubmit = async () => {
-      setState((prev) => ({
-        ...prev,
-        isLoading: true,
-      }));
-      try {
-        await sendContactForm(values);
-        setTouched({});
-        setState(initState);
-        toast({
-          title: "Message sent.",
-          status: "success",
-          duration: 2000,
-          position: "top",
-        });
-      } catch (error) {
-        setState((prev) => ({
-          ...prev,
-          isLoading: false,
-          error: error.message,
-        }));
+      })
+      if (res.status === 200) {
+        setSubmitted(true)
       }
-    };
-  
-    return (
-      <Bounded className="border-solid">
-        <Container className="border-black">
-        <h1 className="text-7xl font-medium">Contact</h1>
-        {error && (
-          <Text color="red.300" my={4} fontSize="xl">
-            {error}
-          </Text>
-        )}
-  
-        <FormControl isRequired isInvalid={touched.name && !values.name} mb={5}>
-          <FormLabel className="text-4xl">Name</FormLabel>
-          <Input
-            type="text"
-            name="name"
-            errorBorderColor="red.300"
-            value={values.name}
-            onChange={handleChange}
-            onBlur={onBlur}
-          />
-          <FormErrorMessage>Required</FormErrorMessage>
-        </FormControl>
-  
-        <FormControl isRequired isInvalid={touched.email && !values.email} mb={5}>
-          <FormLabel>Email</FormLabel>
-          <Input
-            type="email"
-            name="email"
-            errorBorderColor="red.300"
-            value={values.email}
-            onChange={handleChange}
-            onBlur={onBlur}
-          />
-          <FormErrorMessage>Required</FormErrorMessage>
-        </FormControl>
-  
-        <FormControl
-          mb={5}
-          isRequired
-          isInvalid={touched.subject && !values.subject}
-        >
-          <FormLabel>Subject</FormLabel>
-          <Input
-            type="text"
-            name="subject"
-            errorBorderColor="red.300"
-            value={values.subject}
-            onChange={handleChange}
-            onBlur={onBlur}
-          />
-          <FormErrorMessage>Required</FormErrorMessage>
-        </FormControl>
-  
-        <FormControl
-          isRequired
-          isInvalid={touched.message && !values.message}
-          mb={5}
-        >
-          <FormLabel>Message</FormLabel>
-          <Textarea
-            type="text"
-            name="message"
-            rows={4}
-            errorBorderColor="red.300"
-            value={values.message}
-            onChange={handleChange}
-            onBlur={onBlur}
-          />
-          <FormErrorMessage>Required</FormErrorMessage>
-        </FormControl>
-  
-        <Button
-          variant="outline"
-          colorScheme="blue"
-          isLoading={isLoading}
-          disabled={
-            !values.name || !values.email || !values.subject || !values.message
-          }
-          onClick={onSubmit}
-        >
-          Submit
-        </Button>
-        </Container>
-        </Bounded>
-    );
+    } catch (err: any) {
+      console.error('Err', err)
+    }
   }
+
+  return isSubmitted ? (
+    <div>
+      <h1
+        className="text-center font-semibold text-3xl
+      "
+      >
+        Thank you for your message!
+      </h1>
+      <Confetti />
+    </div>
+  ) : (
+    <form onSubmit={onSubmit} className="flex flex-col gap-8">
+      <div className="">
+        <label className="label font-semibold">
+          <span className="label-text">Full Name</span>
+        </label>
+        <input
+          className="input w-full input-bordered input-primary"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          type="text"
+          placeholder="Ethan Mick"
+        />
+      </div>
+      <div>
+        <label className="label font-semibold">
+          <span className="label-text">Email</span>
+        </label>
+        <input
+          className="input w-full input-bordered input-primary"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          type="email"
+          placeholder="name@example.com"
+        />
+      </div>
+      <div>
+        <label className="label font-semibold">
+          <span className="label-text">Message</span>
+        </label>
+        <textarea
+          className="textarea w-full textarea-primary"
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+        ></textarea>
+      </div>
+      <button className="btn btn-primary" type="submit">
+        Submit
+      </button>
+    </form>
+  )
+}
