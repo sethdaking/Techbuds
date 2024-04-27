@@ -1,55 +1,40 @@
 
-  }
+"use client"
+import Link from "next/link"
 
-  return isSubmitted ? (
-    <div>
-      <h1
-        className="text-center font-semibold text-3xl
-      "
-      >
-        Thank you for your message!
-      </h1>
-      <Confetti />
-    </div>
-  ) : (
-    <form onSubmit={onSubmit} className="flex flex-col gap-8">
-      <div className="">
-        <label className="label font-semibold">
-          <span className="label-text">Full Name</span>
-        </label>
-        <input
-          className="input w-full input-bordered input-primary"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          type="text"
-          placeholder="Ethan Mick"
-        />
-      </div>
-      <div>
-        <label className="label font-semibold">
-          <span className="label-text">Email</span>
-        </label>
-        <input
-          className="input w-full input-bordered input-primary"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          type="email"
-          placeholder="name@example.com"
-        />
-      </div>
-      <div>
-        <label className="label font-semibold">
-          <span className="label-text">Message</span>
-        </label>
-        <textarea
-          className="textarea w-full textarea-primary"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-        ></textarea>
-      </div>
-      <button className="btn btn-primary" type="submit">
-        Submit
-      </button>
-    </form>
-  )
+export default function Contact() {
+    return (
+        <main className="flex min-h-screen flex-col items-center" >
+            <div className="relative flex place-items-center p-5 bg-white text-black">
+                <Link href="/">Home</Link>
+            </div>
+
+            <form onSubmit={handleSubmit} className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
+                <div className="mb-4 flex flex-col w-500">
+
+                    <label htmlFor="form-name">Name </label>
+                    <input id="form-name" autoComplete="name" maxLength={50} size="lg" name="name" className="text-black"/>
+
+                    <label htmlFor="form-email"> Email:</label>
+                    <input id="form-email" required autoComplete="email" maxLength={80} name="email" type="email" className="text-black"/>
+
+                    <label htmlFor="form-message"> Message: </label>
+                    <textarea id="form-message" required name="message" rows={5} className="text-black"/>
+
+                </div>
+                <button className=" rounded bg-sky-400" type="submit">Send</button>
+            </form>
+        </main>
+    )
 }
+
+async function handleSubmit(event) {
+      event.preventDefault();
+
+      const formData = new FormData(event.target)
+
+      const response = await fetch('/api/contact', {
+          method: 'post',
+          body: formData,
+         });
+    };
